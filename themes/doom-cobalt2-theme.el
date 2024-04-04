@@ -14,56 +14,66 @@
   "Options for the `doom-cobalt2' theme."
   :group 'doom-themes)
 
+(defcustom doom-cobalt2-unified-font-size nil
+  "If non-nil, all faces use the basic font size, especially for titles in `org-mode'."
+  :group 'doom-cobalt2-theme)
+
 ;;
 ;;; Theme definition
 
 (def-doom-theme doom-cobalt2
-  "A dark theme inspired by Atom One Dark."
+  "A blue theme ported from VSCode Cobalt2."
 
   ;; name        default   256           16
-  ((bg         '("#193549" "black"       "black"  ))
+  ((bg         '("#193549" "#005f87"       "black"  ))
    (fg         '("#fff"    "#fff"        "#fff"  ))
 
-   ;; TODO
-   (bg-alt     '("#21242b" "black"       "black"        ))
-   (fg-alt     '("#5B6268" "#2d2d2d"     "white"        ))
+   ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
+   ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
+   ;; or region), especially when paired with the `doom-darken', `doom-lighten',
+   ;; and `doom-blend' helper functions.
+
+   ;;;; `bg-alt' is used by `hl-mode'
+   (bg-alt     '("#1f4662" "#005f5f"       "black"        ))
+   (fg-alt     '("#ccc" "#ccc"     "white"        ))
 
    ;; These should represent a spectrum from bg to fg, where base0 is a starker
    ;; bg and base8 is a starker fg. For example, if bg is light grey and fg is
    ;; dark grey, base0 should be white and base8 should be black.
-   ;; TODO
-   (base0      '("#1B2229" "black"       "black"        ))
-   (base1      '("#1c1f24" "#1e1e1e"     "brightblack"  ))
-   (base2      '("#202328" "#2e2e2e"     "brightblack"  ))
-   (base3      '("#23272e" "#262626"     "brightblack"  ))
-   (base4      '("#3f444a" "#3f3f3f"     "brightblack"  ))
-   (base5      '("#5B6268" "#525252"     "brightblack"  ))
-   (base6      '("#73797e" "#6b6b6b"     "brightblack"  ))
-   (base7      '("#9ca0a4" "#979797"     "brightblack"  ))
-   (base8      '("#DFDFDF" "#dfdfdf"     "white"        ))
+   ;; (The colors are generated from https://colors.eva.design/)
+   (base0      '("#040F23" "#000000"       "black"        ))
+   (base1      '("#07162A" "#000000"     "black"  ))
+   (base2      '("#0C1F34" "#000000"     "brightblack"  ))
+   (base3      '("#12293E" "#00005f"     "brightblack"  ))
+   (base4      '("#193549" "#00005f"     "brightblack"  ))
+   (base5      '("#497791" "#5f8787"     "brightblack"  ))
+   (base6      '("#79B0C8" "#87afd7"     "brightblack"  ))
+   (base7      '("#AEDDEC" "#afd7ff"     "brightblack"  ))
+   (base8      '("#D5EFF5" "#d7ffff"     "white"        ))
 
-   (grey       base4)
-   (red         '("#ff628c" "#ff6677" "red"))
-   (dark-red    '("#ff5630" nil nil))
-   (orange      '("#ff9d00" "#ffaa00" "brightred"))
-   (green       '("#a5ff90" "#aaff88" "green"))
-   (dark-green  '("#3ad900" "#33dd00" "green"))
-   (yellow      '("#ffc600" "#ffcc00" "yellow"))
-   (blue        '("#0088ff" "#0088ff" "brightblue"))
-   (dark-blue   '("#0050a4" "#0055aa" "blue"))
-   (magenta     '("#fb94ff" "#ff99ff" "magenta"))
-   (cyan        '("#80fcff" "#88ffff" "brightcyan"))
+   (grey        base4)
+   (red         '("#ff628c" "#ff5f87" "red"))
+   (dark-red    '("#ff5630" "#ff5f5f" "red"))
+   (orange      '("#ff9d00" "#ffaf00" "brightred"))
+   (green       '("#a5ff90" "#afff87" "green"))
+   (dark-green  '("#3ad900" "#5fd700" "green"))
+   (yellow      '("#ffc600" "#ffd700" "yellow"))
+   (blue        '("#0088ff" "#0087ff" "brightblue"))
+   (dark-blue   '("#0050a4" "#005faf" "blue"))
+   (dark-dark-blue '("#15232d" "#000000" "black"))
+   (magenta     '("#fb94ff" "#ff87ff" "magenta"))
+   (cyan        '("#80fcff" "#87ffff" "brightcyan"))
 
-   ;; TODO
-   (teal       '("#4db5bd" "#44b9b1" "brightgreen"  ))
-   (violet     '("#a9a1e1" "#a9a1e1" "magenta"      ))
-   (dark-cyan  '("#5699AF" "#5699AF" "cyan"         ))
+   ;; TODO the following three colors are not taken from VSCode Cobalt2
+   (dark-cyan  '("#5390d9" "#5f87d7" "cyan"         ))
+   (teal       '("#a3b18a" "#afaf87" "brightgreen"  ))
+   (violet     '("#c8b6ff" "#d7afff" "magenta"      ))
 
    ;; These are the "universal syntax classes" that doom-themes establishes.
    ;; These *must* be included in every doom themes, or your theme will throw an
    ;; error, as they are used in the base theme defined in doom-themes-base.
-   (highlight      magenta) ; e.g. org-mode hyperlink
-   (vertical-bar   (doom-darken base1 0.1)) ; TODO
+   (highlight      yellow) ; e.g. org-mode hyperlink, search results
+   (vertical-bar   (doom-darken blue 0.4))
    (selection      dark-blue) ; TODO
    (builtin        orange) ; TODO
    (comments       blue)
@@ -77,7 +87,9 @@
    (strings        green)
    (variables      fg)
    (numbers        red) ; numbers are just constants
-   (region         `(,(doom-lighten (car bg-alt) 0.15) ,@(doom-lighten (cdr base1) 0.35))) ; TODO
+   ;; `region' => evil-visual-state selected text
+   ;; ivy selected item
+   (region         dark-blue)
    (error          dark-red)
    (warning        yellow)
    (success        dark-green)
@@ -90,51 +102,55 @@
    ;; mandatory for derived themes.
    (modeline-fg              fg)
    (modeline-fg-alt          base5)
-   (modeline-bg              (doom-darken blue 0.45))
+   (modeline-bg              dark-dark-blue)
    (modeline-bg-alt          (doom-darken blue 0.475))
+
    (modeline-bg-inactive     `(,(car bg-alt) ,@(cdr base1)))
    (modeline-bg-inactive-alt `(,(doom-darken (car bg-alt) 0.1) ,@(cdr bg))))
 
   ;;;; Base theme face overrides
-  (((line-number &override) :foreground base4)
-   ((line-number-current-line &override) :foreground fg)
-   ((font-lock-comment-face &override)
-    :background 'unspecified)
+  (((font-lock-comment-face &override) :background 'unspecified)
+
+   ;; Do not use `yellow' for outline-x because it's the color of any hyperlink.
+   (org-document-title :foreground cyan :weight 'bold :underline t)
+   (outline-1 :foreground (doom-lighten red 0.2) :weight 'bold
+              :height (if doom-cobalt2-unified-font-size 1.0 1.4))
+   (outline-2 :foreground (doom-lighten violet 0.2) :weight 'bold
+              :height (if doom-cobalt2-unified-font-size 1.0 1.2))
+   (outline-3 :foreground (doom-lighten teal 0.2) :weight 'bold :height 1.0)
+   (outline-4 :foreground (doom-lighten magenta 0.2) :height 1.0)
+   (outline-5 :foreground (doom-darken red 0.2) :weight 'bold :height 1.0)
+   (outline-6 :foreground (doom-darken violet 0.2) :weight 'bold :height 1.0)
+   (outline-7 :foreground (doom-darken teal 0.2) :weight 'bold :height 1.0)
+   (outline-8 :foreground (doom-darken magenta 0.2) :height 1.0)
+
+   ;; FIXME
+   ;;;; use `(-1 . -1)' to avoid any increase in the character height or width
+   ;; ((show-paren-match &override)
+   (show-paren-match
+    :box '(:line-width (-1 . -1)) :weight 'ultra-bold)
+
+   ;;;; mode-line
    (mode-line
     :background modeline-bg :foreground modeline-fg)
    (mode-line-inactive
     :background modeline-bg-inactive :foreground modeline-fg-alt)
    (mode-line-emphasis :foreground base8)
 
-   ;;;; css-mode <built-in> / scss-mode
-   (css-proprietary-property :foreground orange)
-   (css-property             :foreground green)
-   (css-selector             :foreground blue)
    ;;;; doom-modeline
    (doom-modeline-bar :background modeline-bg)
    (doom-modeline-buffer-file :inherit 'mode-line-buffer-id :weight 'bold)
    (doom-modeline-buffer-path :inherit 'mode-line-emphasis :weight 'bold)
-   (doom-modeline-buffer-project-root :foreground green :weight 'bold)
-   ;;;; elscreen
-   (elscreen-tab-other-screen-face :background "#353a42" :foreground "#1e2022")
+   ;; FIXME: in doom-one, the option is legacy
+   (doom-modeline-project-dir :foreground green :weight 'bold)
    ;;;; ivy
-   (ivy-current-match :background dark-blue :distant-foreground base0 :weight 'normal)
+   (ivy-current-match :background 'unspecified :distant-foreground yellow :weight 'normal)
    ;;;; LaTeX-mode
    (font-latex-math-face :foreground green)
    ;;;; markdown-mode
    (markdown-markup-face :foreground base5)
    (markdown-header-face :inherit 'bold :foreground red)
-   ((markdown-code-face &override) :background (doom-lighten base3 0.05))
-   ;;;; rjsx-mode
-   (rjsx-tag :foreground red)
-   (rjsx-attr :foreground orange)
-   ;;;; solaire-mode
-   (solaire-mode-line-face
-    :inherit 'mode-line
-    :background modeline-bg-alt)
-   (solaire-mode-line-inactive-face
-    :inherit 'mode-line-inactive
-    :background modeline-bg-inactive-alt))
+   ((markdown-code-face &override) :background (doom-lighten base3 0.05)))
 
   ;;;; Base theme variable overrides-
   ())
