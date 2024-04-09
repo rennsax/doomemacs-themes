@@ -18,6 +18,10 @@
   "If non-nil, all faces use the basic font size, especially for titles in `org-mode'."
   :group 'doom-cobalt2-theme)
 
+(defcustom doom-cobalt2-org-no-special-weekend nil
+  "If non-nil, `org-agenda-date-weekend' has no special face."
+  :group 'doom-cobalt2-theme)
+
 ;;
 ;;; Theme definition
 
@@ -55,6 +59,7 @@
    (red         '("#ff628c" "#ff5f87" "red"))
    (dark-red    '("#ff5630" "#ff5f5f" "red"))
    (orange      '("#ff9d00" "#ffaf00" "brightred"))
+   (light-green '("#80ffbb" "#87ffaf" "green"))
    (green       '("#a5ff90" "#afff87" "green"))
    (dark-green  '("#3ad900" "#5fd700" "green"))
    (yellow      '("#ffc600" "#ffd700" "yellow"))
@@ -77,9 +82,9 @@
    (selection      dark-blue) ; TODO
    (builtin        orange) ; TODO
    (comments       blue)
-   (doc-comments   blue)
+   (doc-comments   cyan)
    (constants      red)
-   (functions      yellow)
+   (functions      yellow) ; FIXME: use different color
    (keywords       orange)
    (methods        yellow)
    (operators      orange)
@@ -100,16 +105,24 @@
    ;; TODO
    ;; These are extra color variables used only in this theme; i.e. they aren't
    ;; mandatory for derived themes.
+
+   ;; org/markdown code
+   (code-bg                  base3)
+
    (modeline-fg              fg)
    (modeline-fg-alt          base5)
    (modeline-bg              dark-dark-blue)
    (modeline-bg-alt          (doom-darken blue 0.475))
 
    (modeline-bg-inactive     `(,(car bg-alt) ,@(cdr base1)))
-   (modeline-bg-inactive-alt `(,(doom-darken (car bg-alt) 0.1) ,@(cdr bg))))
+   (modeline-bg-inactive-alt `(,(doom-darken (car bg-alt) 0.1) ,@(cdr bg)))
+
+   )
 
   ;;;; Base theme face overrides
   (((font-lock-comment-face &override) :background 'unspecified)
+
+   ;;;; org-mode tweaks
 
    ;; Do not use `yellow' for outline-x because it's the color of any hyperlink.
    (org-document-title :foreground cyan :weight 'bold :underline t)
@@ -123,10 +136,30 @@
    (outline-6 :foreground (doom-darken violet 0.2) :weight 'bold :height 1.0)
    (outline-7 :foreground (doom-darken teal 0.2) :weight 'bold :height 1.0)
    (outline-8 :foreground (doom-darken magenta 0.2) :height 1.0)
+   ;; inherited by `org-imminent-deadline'
+   (org-warning :foreground error :weight 'bold)
+   (org-agenda-date :foreground violet)
 
-   ;; FIXME
+   ;; TODO: use `doom-cobalt2-org-no-special-weekend'
+   (org-agenda-date-weekend :inherit 'org-agenda-date)
+   ;; (org-agenda-date-weekend :italic t :foreground (doom-darken violet 0.3))
+
+   (org-agenda-date-today :foreground dark-green :weight 'ultra-bold)
+   (org-scheduled :foreground cyan)
+   (org-scheduled-today :foreground (doom-lighten cyan 0.2))
+   (org-scheduled-previously :foreground (doom-darken cyan 0.2))
+   (org-upcoming-deadline :foreground (doom-lighten warning 0.2) :weight 'bold)
+   (org-upcoming-distant-deadline :foreground (doom-lighten warning 0.1))
+   (org-drawer :foreground (doom-darken comments 0.2) :italic t)
+   (org-special-keyword :inherit 'org-drawer)
+   (org-date :foreground cyan)
+   (org-block :family "MonaspiceKr Nerd Font" :extend t)
+   (org-code :foreground orange :background code-bg)
+   (org-block-begin-line :background (doom-darken bg 0.1) :extend t :foreground dark-blue)
+   ;; ((org-block-begin-line &extend) :underline base2)
+   (org-block-end-line :inherit 'org-block-begin-line)
+
    ;;;; use `(-1 . -1)' to avoid any increase in the character height or width
-   ;; ((show-paren-match &override)
    (show-paren-match
     :box '(:line-width (-1 . -1)) :weight 'ultra-bold)
 
@@ -150,7 +183,9 @@
    ;;;; markdown-mode
    (markdown-markup-face :foreground base5)
    (markdown-header-face :inherit 'bold :foreground red)
-   ((markdown-code-face &override) :background (doom-lighten base3 0.05)))
+   ((markdown-code-face &override) :foreground fg :background code-bg :italic nil)
+
+   )
 
   ;;;; Base theme variable overrides-
   ())
