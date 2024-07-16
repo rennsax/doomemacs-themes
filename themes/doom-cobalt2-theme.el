@@ -159,7 +159,6 @@
    (org-special-keyword :inherit 'org-drawer)
    (org-date :foreground cyan)
 
-   ;; ((org-block &override) :family "MonaspiceKr Nerd Font" :extend t)
    (org-code :foreground orange :background code-bg)
 
    ;; (org-block-begin-line :background (doom-darken bg 0.1) :extend t :foreground dark-blue)
