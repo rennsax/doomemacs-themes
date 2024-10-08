@@ -18,10 +18,6 @@
   "If non-nil, all faces use the basic font size, especially for titles in `org-mode'."
   :group 'doom-cobalt2-theme)
 
-(defcustom doom-cobalt2-org-no-special-weekend nil
-  "If non-nil, `org-agenda-date-weekend' has no special face."
-  :group 'doom-cobalt2-theme)
-
 ;;
 ;;; Theme definition
 
@@ -69,7 +65,6 @@
    (magenta     '("#fb94ff" "#ff87ff" "magenta"))
    (cyan        '("#80fcff" "#87ffff" "brightcyan"))
 
-   ;; TODO the following three colors are not taken from VSCode Cobalt2
    (dark-cyan  '("#5390d9" "#5f87d7" "cyan"         ))
    (teal       '("#a3b18a" "#afaf87" "brightgreen"  ))
    (violet     '("#c8b6ff" "#d7afff" "magenta"      ))
@@ -79,8 +74,8 @@
    ;; error, as they are used in the base theme defined in doom-themes-base.
    (highlight      yellow) ; e.g. org-mode hyperlink, search results
    (vertical-bar   (doom-darken blue 0.4))
-   (selection      dark-blue) ; TODO
-   (builtin        orange) ; TODO
+   (selection      dark-blue)
+   (builtin        orange)
    (comments       blue)
    (doc-comments   comments)
    (constants      red)
@@ -102,7 +97,6 @@
    (vc-added       dark-green)
    (vc-deleted     red)
 
-   ;; TODO
    ;; These are extra color variables used only in this theme; i.e. they aren't
    ;; mandatory for derived themes.
 
@@ -145,9 +139,7 @@
    (org-warning :foreground error :weight 'bold)
    (org-agenda-date :foreground violet)
 
-   ;; TODO: use `doom-cobalt2-org-no-special-weekend'
    (org-agenda-date-weekend :inherit 'org-agenda-date)
-   ;; (org-agenda-date-weekend :italic t :foreground (doom-darken violet 0.3))
 
    (org-agenda-date-today :foreground dark-green :weight 'ultra-bold)
    (org-scheduled :foreground cyan)
@@ -161,21 +153,24 @@
 
    (org-code :foreground orange :background code-bg)
 
-   ;; (org-block-begin-line :background (doom-darken bg 0.1) :extend t :foreground dark-blue)
-   ;; ((org-block-begin-line &extend) :underline base2)
-   ;; (org-block-end-line :inherit 'org-block-begin-line)
-
    ;;;; mode-line
    (mode-line :background modeline-bg :foreground modeline-fg)
    (mode-line-inactive :background modeline-bg-inactive :foreground modeline-fg-alt)
    (mode-line-emphasis :foreground base8)
 
+   ;;;; whitespace-mode
+   (whitespace-tab :background (doom-darken bg 0.1)
+                   :foreground (doom-lighten bg 0.1))
+
+   ;;;; tab-bar-mode
+   (tab-bar :background base3 :height (if doom-cobalt2-unified-font-size 1.0 1.1))
+   (tab-bar-tab-inactive :background base3)
+
    ;;;; doom-modeline
    (doom-modeline-bar :background modeline-bg)
    (doom-modeline-buffer-file :inherit 'mode-line-buffer-id :weight 'bold)
    (doom-modeline-buffer-path :inherit 'mode-line-emphasis :weight 'bold)
-   ;; FIXME: in doom-one, the option is legacy
-   (doom-modeline-project-dir :foreground green :weight 'bold)
+
    ;;;; ivy
    (ivy-current-match :background 'unspecified :distant-foreground yellow :weight 'normal)
    ;;;; LaTeX-mode
