@@ -163,8 +163,8 @@
                    :foreground (doom-lighten bg 0.1))
 
    ;;;; tab-bar-mode
-   (tab-bar :background base3 :height (if doom-cobalt2-unified-font-size 1.0 1.1))
-   (tab-bar-tab-inactive :background base3)
+   (tab-bar :background base1 :height (if doom-cobalt2-unified-font-size 1.0 1.1))
+   (tab-bar-tab-inactive :background base1)
 
    ;;;; doom-modeline
    (doom-modeline-bar :background modeline-bg)
@@ -191,6 +191,32 @@
    (rainbow-delimiters-depth-4-face :foreground rainbow--delimiters-1)
    (rainbow-delimiters-depth-5-face :foreground rainbow--delimiters-2)
    (rainbow-delimiters-depth-6-face :foreground rainbow--delimiters-3)
+
+   ;;;; ediff <built-in>
+   (ediff-fine-diff-A    :background "#D65569" :weight 'bold)
+   (ediff-fine-diff-B    :background "#469D15" :weight 'bold)
+   (ediff-fine-diff-C    :background "#005faf" :weight 'bold)
+
+   ;; (ediff-current-diff-A :background "#77002a")
+   ;; (ediff-current-diff-B :background "#206908")
+   (ediff-current-diff-A :background (doom-blend red base3 0.2))
+   (ediff-current-diff-B :background (doom-blend green bg 0.2))
+   (ediff-current-diff-C :background (doom-lighten "#193549" 0.1))
+
+   (ediff-even-diff-A    :background "#243f52")
+
+   ;;;; diredfl
+   (diredfl-dir-name :foreground cyan :weight 'bold)
+   (diredfl-symlink :foreground red)
+
+   ;;;; magit
+   (magit-branch-remote :foreground green :box '(:line-width (-1 . -1)) :weight 'bold)
+   (magit-section-heading :foreground yellow :weight 'bold :extend t)
+   (magit-branch-current :foreground dark-red :box '(:line-width (-1 . -1)) :weight 'bold)
+
+   ;;;; avy
+   (avy-background-face :foreground dark-cyan)
+   (avy-lead-face :background red :foreground bg :distant-foreground fg :weight 'bold)
 
    )
 
